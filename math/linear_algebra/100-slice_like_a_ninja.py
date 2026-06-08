@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Module to slice a matrix along specific axes."""
+"""Module to slice a numpy array along specific axes."""
 
 
 def np_slice(matrix, axes={}):
@@ -16,13 +16,11 @@ def np_slice(matrix, axes={}):
     slices = []
     for i in range(matrix.ndim):
         if i in axes:
-            params = axes[i]
-            if len(params) == 1:
-                slices.append(slice(params[0], None))
-            elif len(params) == 2:
-                slices.append(slice(params[0], params[1]))
-            else:
-                slices.append(slice(params[0], params[1], params[2]))
+            # Utiliser slice(*axes[i]) pour que Python interprète correctement
+            # (2,) -> slice(2) -> stop=2
+            # (1, 3) -> slice(1, 3) -> start=1, stop=3
+            # (None, None, -2) -> slice(None, None, -2)
+            slices.append(slice(*axes[i]))
         else:
             slices.append(slice(None))
 
