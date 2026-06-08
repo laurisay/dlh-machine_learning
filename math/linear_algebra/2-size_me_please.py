@@ -3,7 +3,7 @@
 def matrix_shape(matrix):
     shape = []
     current = matrix
-    while type(current) == list:
+    while isinstance(current, list):
         shape.append(len(current))
         current = current[0] if len(current) > 0 else None
     return shape
