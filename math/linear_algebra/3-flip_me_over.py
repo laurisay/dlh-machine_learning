@@ -6,7 +6,7 @@ def matrix_transpose(matrix):
     """Return the transpose of a 2D matrix."""
     rows = len(matrix)
     cols = len(matrix[0])
-    
+
     transpose = []
     for j in range(cols):
         new_row = []
