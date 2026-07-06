@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+"""
+summation_i_squared module
+
+This module provides a function to calculate the sum of squares
+from 1 to n using the mathematical formula:
+Σ(i^2) = n(n+1)(2n+1)/6
+"""
+
 
 def summation_i_squared(n):
     """
