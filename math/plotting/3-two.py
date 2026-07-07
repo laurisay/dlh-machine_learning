@@ -21,22 +21,12 @@ def two():
     y2 = np.exp((r / t2) * x)
     plt.figure(figsize=(6.4, 4.8))
 
-    # Plot y1 as dashed red line (C-14)
     plt.plot(x, y1, 'r--', label='C-14')
-    
-    # Plot y2 as solid green line (Ra-226)
     plt.plot(x, y2, 'g-', label='Ra-226')
-    
-    # Set labels and title
     plt.xlabel('Time (years)')
     plt.ylabel('Fraction Remaining')
     plt.title('Exponential Decay of Radioactive Elements')
-    
-    # Set axis ranges
     plt.xlim(0, 20000)
     plt.ylim(0, 1)
-    
-    # Add legend in upper right corner
     plt.legend(loc='upper right')
-    
     plt.show()
