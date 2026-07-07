@@ -20,12 +20,8 @@ def scatter():
     y += 180
     plt.figure(figsize=(6.4, 4.8))
 
-    # Plot x vs y as magenta points
     plt.scatter(x, y, color='magenta')
-    
-    # Set labels and title
     plt.xlabel('Height (in)')
     plt.ylabel('Weight (lbs)')
-    plt.title('Men\'s Height vs Weight')
-    
+    plt.title("Men's Height vs Weight")
     plt.show()
