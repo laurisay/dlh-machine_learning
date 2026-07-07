@@ -19,18 +19,10 @@ def change_scale():
     y = np.exp((r / t) * x)
     plt.figure(figsize=(6.4, 4.8))
 
-    # Plot x vs y as a line graph
     plt.plot(x, y)
-    
-    # Set labels and title
     plt.xlabel('Time (years)')
     plt.ylabel('Fraction Remaining')
     plt.title('Exponential Decay of C-14')
-    
-    # Set y-axis to logarithmic scale
     plt.yscale('log')
-    
-    # Set x-axis range from 0 to 28650
     plt.xlim(0, 28650)
-    
     plt.show()
