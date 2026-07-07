@@ -4,13 +4,9 @@ import matplotlib.pyplot as plt
 
 def line():
     y = np.arange(0, 11) ** 3
+    x = np.arange(0, 11)
     plt.figure(figsize=(6.4, 4.8))
 
-    # Plot y as a solid red line
-    plt.plot(y, color='red', linewidth=2)
-    
-    # Set x-axis range from 0 to 10
+    plt.plot(x, y, color='red')
     plt.xlim(0, 10)
-    
-    # Display the plot
     plt.show()
