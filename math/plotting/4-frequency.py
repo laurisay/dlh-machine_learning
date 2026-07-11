@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Module that plots a histogram of student grades."""
 import numpy as np
 import matplotlib.pyplot as plt
 
