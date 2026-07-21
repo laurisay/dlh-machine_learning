@@ -27,16 +27,13 @@ class Poisson:
         k = int(k)
         if k < 0:
             return 0
-        
         # Calcul de e^(-lambtha) sans math.exp
         e = 2.7182818285  # Approximation de e
         exp_neg_lambtha = e ** (-self.lambtha)
-        
         # Calcul de la factorielle sans math.factorial
         factorial = 1
         for i in range(1, k + 1):
             factorial *= i
-        
         # Calcul de la PMF
         pmf = ((self.lambtha ** k) * exp_neg_lambtha) / factorial
         return pmf
