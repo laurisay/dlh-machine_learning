@@ -64,7 +64,7 @@ class Normal:
         Returns:
             float: The PDF value for x
         """
-        # PDF d'une distribution normale: f(x) = (1 / (σ * √(2π))) * e^(-(x-μ)² / (2σ²))
+        # PDF normale: f(x) = 1/(σ√(2π)) * e^(-(x-μ)²/(2σ²))
         pi = 3.1415926536
         e = 2.7182818285
         # Calcul du coefficient devant l'exponentielle
