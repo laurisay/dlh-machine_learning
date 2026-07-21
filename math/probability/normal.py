@@ -82,15 +82,6 @@ class Normal:
         Returns:
             float: The CDF value for x
         """
-        # Calcul du z-score
-        z = (x - self.mean) / self.stddev
-        # Approximation de la CDF de la normale standard
-        return 0.5 * (1 + self._erf(z / (2 ** 0.5)))
-
-    def cdf(self, x):
-        """
-        Calculates the value of the CDF for a given x-value.
-        """
         z = (x - self.mean) / self.stddev
         return self._std_normal_cdf(z)
 
