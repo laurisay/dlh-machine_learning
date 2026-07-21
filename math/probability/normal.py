@@ -67,15 +67,12 @@ class Normal:
         # PDF normale: f(x) = 1/(σ√(2π)) * e^(-(x-μ)²/(2σ²))
         pi = 3.1415926536
         e = 2.7182818285
-        # Calcul du coefficient devant l'exponentielle
         coefficient = 1 / (self.stddev * ((2 * pi) ** 0.5))
-        # Calcul de l'exposant
         exponent = -((x - self.mean) ** 2) / (2 * (self.stddev ** 2))
-        # Calcul de la PDF
         pdf_value = coefficient * (e ** exponent)
         return pdf_value
 
-        def cdf(self, x):
+    def cdf(self, x):
         """
         Calculates the value of the CDF for a given x-value.
 
