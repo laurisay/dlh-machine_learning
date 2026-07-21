@@ -74,3 +74,42 @@ class Normal:
         # Calcul de la PDF
         pdf_value = coefficient * (e ** exponent)
         return pdf_value
+
+        def cdf(self, x):
+        """
+        Calculates the value of the CDF for a given x-value.
+
+        Args:
+            x (float): The x-value
+
+        Returns:
+            float: The CDF value for x
+        """
+        # Calcul du z-score
+        z = (x - self.mean) / self.stddev
+        # Approximation de la CDF de la normale standard
+        return 0.5 * (1 + self._erf(z / (2 ** 0.5)))
+
+    def _erf(self, x):
+        """
+        Approximation de la fonction d'erreur (error function).
+        Utilisation de la formule de Abramowitz et Stegun.
+        """
+        # Constantes pour l'approximation de la fonction d'erreur
+        a1 = 0.254829592
+        a2 = -0.284496736
+        a3 = 1.421413741
+        a4 = -1.453152027
+        a5 = 1.061405429
+        p = 0.3275911
+        e = 2.7182818285
+
+        sign = 1
+        if x < 0:
+            sign = -1
+            x = -x
+
+        t = 1.0 / (1.0 + p * x)
+        y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * (e ** (-x * x))
+
+        return sign * y
