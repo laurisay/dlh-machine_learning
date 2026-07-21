@@ -88,8 +88,9 @@ class Normal:
     def _std_normal_cdf(self, z):
         """
         Calcule la CDF de la distribution normale standard.
+        Utilise l'approximation polynomiale de Abramowitz et Stegun.
         """
-        # Constantes pour l'approximation de Abramowitz et Stegun
+        # Constantes pour l'approximation
         a1 = 0.254829592
         a2 = -0.284496736
         a3 = 1.421413741
@@ -98,16 +99,13 @@ class Normal:
         p = 0.3275911
         e = 2.7182818285
 
-        # Sauvegarde du signe
-        sign = 1
+        # Si z est négatif, on utilise la symétrie
         if z < 0:
-            sign = -1
-            z = abs(z)
+            return 1 - self._std_normal_cdf(-z)
 
         # Approximation de la fonction d'erreur (erf)
         t = 1.0 / (1.0 + p * z)
         erf = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * (e ** (-z * z))
-        erf *= sign
 
         # CDF = 0.5 * (1 + erf(z / sqrt(2)))
         return 0.5 * (1 + erf)
