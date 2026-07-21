@@ -37,3 +37,16 @@ class Poisson:
         # Calcul de la PMF
         pmf = ((self.lambtha ** k) * exp_neg_lambtha) / factorial
         return pmf
+
+    def cdf(self, k):
+        """
+        Calculates the value of the CDF for a given number of successes.
+        """
+        k = int(k)
+        if k < 0:
+            return 0
+        # Calcul de la CDF en sommant les PMF de 0 à k
+        cdf_value = 0
+        for i in range(k + 1):
+            cdf_value += self.pmf(i)
+        return cdf_value
