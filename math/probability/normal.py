@@ -87,12 +87,18 @@ class Normal:
         # Approximation de la CDF de la normale standard
         return 0.5 * (1 + self._erf(z / (2 ** 0.5)))
 
-    def _erf(self, x):
+    def cdf(self, x):
         """
-        Approximation de la fonction d'erreur (error function).
-        Utilisation de la formule de Abramowitz et Stegun.
+        Calculates the value of the CDF for a given x-value.
         """
-        # Constantes pour l'approximation de la fonction d'erreur
+        z = (x - self.mean) / self.stddev
+        return self._std_normal_cdf(z)
+
+    def _std_normal_cdf(self, z):
+        """
+        Calcule la CDF de la distribution normale standard.
+        """
+        # Constantes pour l'approximation de Abramowitz et Stegun
         a1 = 0.254829592
         a2 = -0.284496736
         a3 = 1.421413741
@@ -101,12 +107,16 @@ class Normal:
         p = 0.3275911
         e = 2.7182818285
 
+        # Sauvegarde du signe
         sign = 1
-        if x < 0:
+        if z < 0:
             sign = -1
-            x = -x
+            z = abs(z)
 
-        t = 1.0 / (1.0 + p * x)
-        y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * (e ** (-x * x))
+        # Approximation de la fonction d'erreur (erf)
+        t = 1.0 / (1.0 + p * z)
+        erf = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * (e ** (-z * z))
+        erf *= sign
 
-        return sign * y
+        # CDF = 0.5 * (1 + erf(z / sqrt(2)))
+        return 0.5 * (1 + erf)
