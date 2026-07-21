@@ -72,7 +72,7 @@ class Normal:
         pdf_value = coefficient * (e ** exponent)
         return pdf_value
 
-def cdf(self, x):
+    def cdf(self, x):
         """
         Calculates the value of the CDF for a given x-value.
 
@@ -93,13 +93,25 @@ def cdf(self, x):
         p = 0.3275911
         e = 2.7182818285
 
-        # Si z est négatif, on utilise la symétrie
         if z < 0:
-            return 1 - self.cdf(self.mean - (abs(z) * self.stddev))
+            return 1 - self._std_normal_cdf(-z)
 
-        # Approximation de la fonction d'erreur (erf)
         t = 1.0 / (1.0 + p * z)
         erf = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * (e ** (-z * z))
+        return 0.5 * (1 + erf)
 
-        # CDF = 0.5 * (1 + erf(z / sqrt(2)))
+    def _std_normal_cdf(self, z):
+        """
+        Calcule la CDF de la distribution normale standard.
+        """
+        a1 = 0.254829592
+        a2 = -0.284496736
+        a3 = 1.421413741
+        a4 = -1.453152027
+        a5 = 1.061405429
+        p = 0.3275911
+        e = 2.7182818285
+
+        t = 1.0 / (1.0 + p * z)
+        erf = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * (e ** (-z * z))
         return 0.5 * (1 + erf)
