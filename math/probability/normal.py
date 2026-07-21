@@ -72,7 +72,7 @@ class Normal:
         pdf_value = coefficient * (e ** exponent)
         return pdf_value
 
-    def cdf(self, x):
+def cdf(self, x):
         """
         Calculates the value of the CDF for a given x-value.
 
@@ -83,14 +83,8 @@ class Normal:
             float: The CDF value for x
         """
         z = (x - self.mean) / self.stddev
-        return self._std_normal_cdf(z)
 
-    def _std_normal_cdf(self, z):
-        """
-        Calcule la CDF de la distribution normale standard.
-        Utilise l'approximation polynomiale de Abramowitz et Stegun.
-        """
-        # Constantes pour l'approximation
+        # Constantes pour l'approximation de Abramowitz et Stegun
         a1 = 0.254829592
         a2 = -0.284496736
         a3 = 1.421413741
@@ -101,7 +95,7 @@ class Normal:
 
         # Si z est négatif, on utilise la symétrie
         if z < 0:
-            return 1 - self._std_normal_cdf(-z)
+            return 1 - self.cdf(self.mean - (abs(z) * self.stddev))
 
         # Approximation de la fonction d'erreur (erf)
         t = 1.0 / (1.0 + p * z)
