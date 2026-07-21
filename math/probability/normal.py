@@ -52,4 +52,4 @@ class Normal:
         Returns:
             float: The x-value of z
         """
-        return self.mean + (z * self.stddev)        
+        return self.mean + (z * self.stddev)
