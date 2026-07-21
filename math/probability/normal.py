@@ -24,8 +24,13 @@ class Normal:
                 raise TypeError("data must be a list")
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
+
             self.mean = float(sum(data) / len(data))
-            variance = sum((x - self.mean) ** 2 for x in data) / len(data)
+
+            variance = sum(
+                (x - self.mean) ** 2 for x in data
+            ) / len(data)
+
             self.stddev = float(variance ** 0.5)
 
     def z_score(self, x):
@@ -46,23 +51,36 @@ class Normal:
         """
         pi = 3.1415926536
         e = 2.7182818285
-        coefficient = 1 / (self.stddev * ((2 * pi) ** 0.5))
-        exponent = -((x - self.mean) ** 2) / (2 * (self.stddev ** 2))
+
+        coefficient = 1 / (
+            self.stddev * ((2 * pi) ** 0.5)
+        )
+
+        exponent = -(
+            (x - self.mean) ** 2
+        ) / (2 * (self.stddev ** 2))
+
         return coefficient * (e ** exponent)
 
     def cdf(self, x):
         """
         Calculates the value of the CDF for a given x-value.
         """
-        z = (x - self.mean) / self.stddev
-        return self._standard_normal_cdf(z)
+        pi = 3.1415926536
+        e = 2.7182818285
 
-    def _standard_normal_cdf(self, z):
+        z = (x - self.mean) / (
+            self.stddev * (2 * pi) ** 0.5
+        )
+
+        return 0.5 * (
+            1 + self._erf(z)
+        )
+
+    def _erf(self, z):
         """
-        Calcule la CDF de la distribution normale standard.
-        Utilise l'approximation de Abramowitz et Stegun.
+        Approximates the error function.
         """
-        # Constantes pour l'approximation
         a1 = 0.254829592
         a2 = -0.284496736
         a3 = 1.421413741
@@ -71,16 +89,22 @@ class Normal:
         p = 0.3275911
         e = 2.7182818285
 
-        # Sauvegarde du signe
         sign = 1
+
         if z < 0:
             sign = -1
-            z = abs(z)
+            z = -z
 
-        # Approximation de la fonction d'erreur (erf)
-        t = 1.0 / (1.0 + p * z)
-        erf = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * (e ** (-z * z))
-        erf *= sign
+        t = 1 / (1 + p * z)
 
-        # CDF = 0.5 * (1 + erf(z / sqrt(2)))
-        return 0.5 * (1 + erf)
+        erf = 1 - (
+            (
+                (
+                    (
+                        (a5 * t + a4) * t + a3
+                    ) * t + a2
+                ) * t + a1
+            ) * t * (e ** (-z ** 2))
+        )
+
+        return sign * erf
