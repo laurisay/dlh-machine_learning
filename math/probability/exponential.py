@@ -23,4 +23,5 @@ class Exponential:
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
             # Pour une distribution exponentielle, lambtha = 1 / moyenne
-            self.lambtha = float(1 / (sum(data) / len(data)))
+            mean = sum(data) / len(data)
+            self.lambtha = float(1 / mean)
