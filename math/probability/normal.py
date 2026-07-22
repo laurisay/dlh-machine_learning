@@ -24,72 +24,50 @@ class Normal:
                 raise TypeError("data must be a list")
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
-
+            # Calcul de la moyenne
             self.mean = float(sum(data) / len(data))
-
-            variance = sum(
-                (x - self.mean) ** 2 for x in data
-            ) / len(data)
-
+            # Calcul de l'écart type (population)
+            variance = sum((x - self.mean) ** 2 for x in data) / len(data)
             self.stddev = float(variance ** 0.5)
 
     def z_score(self, x):
         """
         Calculates the z-score of a given x-value.
+
+        Args:
+            x (float): The x-value
+
+        Returns:
+            float: The z-score of x
         """
         return (x - self.mean) / self.stddev
 
     def x_value(self, z):
         """
         Calculates the x-value of a given z-score.
+
+        Args:
+            z (float): The z-score
+
+        Returns:
+            float: The x-value of z
         """
         return self.mean + (z * self.stddev)
 
     def pdf(self, x):
         """
         Calculates the value of the PDF for a given x-value.
+
+        Args:
+            x (float): The x-value
+
+        Returns:
+            float: The PDF value for x
         """
+        # PDF normale: f(x) = 1/(σ√(2π)) * e^(-(x-μ)²/(2σ²))
         pi = 3.1415926536
         e = 2.7182818285
-
-        coefficient = 1 / (
-            self.stddev * ((2 * pi) ** 0.5)
-        )
-
-        exponent = -(
-            (x - self.mean) ** 2
-        ) / (2 * (self.stddev ** 2))
-
-        return coefficient * (e ** exponent)
-
-
-    def cdf(self, x):
-        """
-        Calculates the value of the CDF for a given x-value.
-        """
-        z = (x - self.mean) / (self.stddev * (2 ** 0.5))
-
-        t = 1 / (1 + 0.3275911 * abs(z))
-
-        a1 = 0.254829592
-        a2 = -0.284496736
-        a3 = 1.421413741
-        a4 = -1.453152027
-        a5 = 1.061405429
-
-        erf = 1 - (
-            (
-                (
-                    (
-                        (
-                            a5 * t + a4
-                        ) * t + a3
-                    ) * t + a2
-                ) * t + a1
-            ) * t
-        ) * (2.7182818285 ** (-z ** 2))
-
-        if z < 0:
-            erf = -erf
-
-        return 0.5 * (1 + erf)
+        coefficient = 1 / (self.stddev * ((2 * pi) ** 0.5))
+        exponent = -((x - self.mean) ** 2) / (2 * (self.stddev ** 2))
+        pdf_value = coefficient * (e ** exponent)
+        return pdf_value
