@@ -72,41 +72,21 @@ class Normal:
         pdf_value = coefficient * (e ** exponent)
         return pdf_value
 
-    def cdf(self, x):
+        def cdf(self, x):
         """
         Calculates the value of the CDF for a given x-value.
         """
-        z = (x - self.mean) / (
-            self.stddev * (2 ** 0.5)
+        pi = 3.1415926536
+        z = (x - self.mean) / (self.stddev * (2 ** 0.5))
+
+        erf = (
+            z
+            - (z ** 3) / 3
+            + (z ** 5) / 10
+            - (z ** 7) / 42
+            + (z ** 9) / 216
         )
 
-        sign = 1
-        if z < 0:
-            sign = -1
-            z = -z
-
-        t = 1 / (1 + 0.3275911 * z)
-
-        a1 = 0.254829592
-        a2 = -0.284496736
-        a3 = 1.421413741
-        a4 = -1.453152027
-        a5 = 1.061405429
-
-        erf = 1 - (
-            (
-                (
-                    (
-                        (
-                            a5 * t + a4
-                        ) * t + a3
-                    ) * t + a2
-                ) * t + a1
-            ) * t
-        ) * (
-            2.7182818285 ** (-z ** 2)
-        )
-
-        erf = sign * erf
+        erf = (2 / (pi ** 0.5)) * erf
 
         return 0.5 * (1 + erf)
