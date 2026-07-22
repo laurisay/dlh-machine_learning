@@ -72,7 +72,7 @@ class Normal:
         pdf_value = coefficient * (e ** exponent)
         return pdf_value
 
-        def cdf(self, x):
+    def cdf(self, x):
         """
         Calculates the value of the CDF for a given x-value.
         """
