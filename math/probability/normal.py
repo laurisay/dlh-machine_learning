@@ -62,6 +62,7 @@ class Normal:
 
         return coefficient * (e ** exponent)
 
+
     def cdf(self, x):
         """
         Calculates the value of the CDF for a given x-value.
@@ -69,20 +70,29 @@ class Normal:
         pi = 3.1415926536
         e = 2.7182818285
 
-        z = (x - self.mean) / (
-            self.stddev * (2 ** 0.5)
-        )
+        z = (x - self.mean) / self.stddev
+
+        if z < 0:
+            return 0.5 * (
+                1 - (
+                    1 - (
+                        1 / (1 + 0.2316419 * (-z))
+                    ) * (
+                        0.319381530 * (
+                            e ** (-z ** 2 / 2)
+                        )
+                    )
+                )
+            )
 
         return 0.5 * (
-            1 + (2 / (pi ** 0.5)) *
-            (
-                z -
-                (z ** 3) / 3 +
-                (z ** 5) / 10 -
-                (z ** 7) / 42 +
-                (z ** 9) / 216 -
-                (z ** 11) / 1320 +
-                (z ** 13) / 9360 -
-                (z ** 15) / 75600
+            1 + (
+                1 - (
+                    1 / (1 + 0.2316419 * z)
+                ) * (
+                    0.319381530 * (
+                        e ** (-z ** 2 / 2)
+                    )
+                )
             )
         )
