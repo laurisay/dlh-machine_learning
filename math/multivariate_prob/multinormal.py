@@ -27,14 +27,11 @@ class MultiNormal:
         centered = data - self.mean
 
         self.cov = np.dot(centered, centered.T) / (n - 1)
-
     def pdf(self, x):
         """Calculates the PDF at a data point."""
 
         if not isinstance(x, np.ndarray):
-            raise TypeError(
-                "x must be a numpy.ndarray"
-            )
+            raise TypeError("x must be a numpy.ndarray")
 
         d = self.mean.shape[0]
 
@@ -43,17 +40,17 @@ class MultiNormal:
                 "x must have the shape ({}, 1)".format(d)
             )
 
-        centered = x - self.mean
+        diff = x - self.mean
 
-        cov_inv = np.linalg.inv(self.cov)
+        inv_cov = np.linalg.inv(self.cov)
 
-        exponent = -0.5 * np.dot(
-            np.dot(centered.T, cov_inv),
-            centered
+        exponent = -0.5 * np.matmul(
+            np.matmul(diff.T, inv_cov),
+            diff
         )
 
         denominator = np.sqrt(
             ((2 * np.pi) ** d) * np.linalg.det(self.cov)
         )
 
-        return np.exp(exponent) / denominator
+        return (np.exp(exponent) / denominator).item()
