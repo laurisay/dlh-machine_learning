@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
 import numpy as np
 
 def likelihood(x, n, P):
+    """Calculates the likelihood of obtaining this data given hypothetical probabilities."""
     if not isinstance(n, int) or n <= 0:
         raise ValueError("n must be a positive integer")
     
@@ -16,7 +18,10 @@ def likelihood(x, n, P):
     if np.any((P < 0) | (P > 1)):
         raise ValueError("All values in P must be in the range [0, 1]")
     
-    from math import comb
-    binom_coeff = comb(n, x)
+    # Calcul du coefficient binomial sans importer math
+    # Utilisation de la fonction factorielle de numpy
+    from numpy import factorial
+    binom_coeff = factorial(n) / (factorial(x) * factorial(n - x))
     
+    # Calcul de la vraisemblance
     return binom_coeff * (P ** x) * ((1 - P) ** (n - x))
