@@ -27,7 +27,7 @@ class MultiNormal:
         centered = data - self.mean
 
         self.cov = np.dot(centered, centered.T) / (n - 1)
-
+    
     def pdf(self, x):
         """Calculates the PDF at a data point."""
 
@@ -43,15 +43,15 @@ class MultiNormal:
 
         diff = x - self.mean
 
-        inv_cov = np.linalg.inv(self.cov)
-
-        exponent = -0.5 * np.dot(
-            np.dot(diff.T, inv_cov),
+        exponent = np.matmul(
+            np.matmul(diff.T, np.linalg.inv(self.cov)),
             diff
-        ).item()
-
-        denominator = np.sqrt(
-            ((2 * np.pi) ** d) * np.linalg.det(self.cov)
         )
 
-        return np.exp(exponent) / denominator
+        pdf = (
+            1 / np.sqrt(
+                ((2 * np.pi) ** d) * np.linalg.det(self.cov)
+            )
+        ) * np.exp(-0.5 * exponent)
+
+        return pdf.item()
