@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Function to convert DataFrame columns to numpy array."""
 
-import pandas as pd
-
 
 def array(df):
     """Selects last 10 rows of High and Close columns and converts to ndarray.
