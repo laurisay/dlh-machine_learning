@@ -2,7 +2,6 @@
 """Function to convert DataFrame columns to numpy array."""
 
 import pandas as pd
-import numpy as np
 
 
 def array(df):
