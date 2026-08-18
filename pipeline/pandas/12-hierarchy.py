@@ -2,7 +2,7 @@
 """Function to create hierarchical concatenation of two DataFrames."""
 
 import pandas as pd
-from 10-index import index
+index = __import__('10-index').index
 
 
 def hierarchy(df1, df2):
