@@ -27,4 +27,4 @@ def HP(Di, beta):
 
     Pi = P / sumP
 
-    return Hi, Pi
+    return float(Hi), Pi
