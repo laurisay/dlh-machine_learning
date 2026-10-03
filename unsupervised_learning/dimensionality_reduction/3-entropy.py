@@ -1,3 +1,4 @@
+cat > 3-entropy.py << 'EOF'
 #!/usr/bin/env python3
 """Module that calculates the Shannon entropy and P affinities."""
 import numpy as np
@@ -27,4 +28,5 @@ def HP(Di, beta):
 
     Pi = P / sumP
 
-    return Hi, Pi
+    return float(Hi), Pi
+EOF
