@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Module that performs a t-SNE transformation."""
 import numpy as np
+
 pca = __import__('1-pca').pca
 P_affinities = __import__('4-P_affinities').P_affinities
 grads = __import__('6-grads').grads
@@ -23,7 +24,7 @@ def tsne(X, ndims=2, idims=50, perplexity=30.0, iterations=1000, lr=500):
 
     Returns:
         Y: numpy.ndarray of shape (n, ndims) containing the optimized
-            low dimensional transformation of X.
+        low dimensional transformation of X.
     """
     n, d = X.shape
 
@@ -42,17 +43,17 @@ def tsne(X, ndims=2, idims=50, perplexity=30.0, iterations=1000, lr=500):
         else:
             a = 0.8
 
-        Y_new = Y + lr * dY + a * (Y - Y_prev)
+        Y_new = Y - lr * dY + a * (Y - Y_prev)
         Y_prev = Y
         Y = Y_new
 
         Y = Y - np.mean(Y, axis=0)
 
-        if i == 100:
-            P = P / 4
-
         if (i + 1) % 100 == 0:
             C = cost(P, Q)
             print('Cost at iteration {}: {}'.format(i + 1, C))
+
+        if i == 99:
+            P = P / 4
 
     return Y
