@@ -5,24 +5,20 @@ import numpy as np
 
 def HP(Di, beta):
     """
-    Calculate the Shannon entropy and P affinities relative to a data point.
+    Calculate the Shannon entropy and P affinities.
 
     Args:
-        Di: numpy.ndarray of shape (n - 1,) containing the pairwise
-            distances between a data point and all other points.
-        beta: numpy.ndarray of shape (1,) containing the beta value.
+        Di: numpy.ndarray of shape (n - 1,) containing pairwise distances.
+        beta: numpy.ndarray of shape (1,) containing beta.
 
     Returns:
-        (Hi, Pi): Hi is the Shannon entropy and Pi contains
-        the P affinities.
+        Hi: Shannon entropy.
+        Pi: P affinities.
     """
     P = np.exp(-Di * beta)
     sumP = np.sum(P)
 
-    Hi = np.log2(sumP) + beta * np.sum(Di * P) / (
-        sumP * np.log(2)
-    )
-
     Pi = P / sumP
+    Hi = -np.sum(Pi * np.log2(Pi))
 
     return Hi, Pi
